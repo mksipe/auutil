@@ -63,32 +63,37 @@ fn main() {
         exploitdb: testsoftware("searchsploit"),
     
     };
-        println!("{}","Detected Software -----------------------------------------\n".red());
+    println!("{}","Detected Software ----------------------------------------------+\n".red());
         // I am aware this is cringe I will get to it lol.
-        display(software.apt, "APT");
-        display(software.yum, "YUM");
-        display(software.pacman, "PACMAN");
-        display(software.rpm, "RPM");
-        println!("\n");
-        display(software.dpkg, "DPKG");
-        display(software.dnf, "DNF");
-        display(software.zypper, "ZYPPER");
-        display(software.snap, "SNAP");
-        println!("\n");
-        display(software.brew, "BREW");
-        display(software.emerge, "EMERGE");
-        display(software.nix, "NIX");
-        display(software.pip, "PIP");
-        println!("\n");
-        display(software.pip3, "PIP3");
-        display(software.cargo, "CARGO");
-        display(software.go, "GO");
-        display(software.maven, "MAVEN");
-        println!("\n");
-        display(software.npm, "NPM");
-        display(software.nuget, "NUGET");
-        display(software.rubygems, "GEM");
-        display(software.exploitdb, "EXDB");
+    display(software.apt, "APT");
+    display(software.yum, "YUM");
+    display(software.pacman, "PACMAN");
+    display(software.rpm, "RPM");
+    println!("{}","| \n".red());
+    display(software.dpkg, "DPKG");
+    display(software.dnf, "DNF");
+    display(software.zypper, "ZYPPER");
+    display(software.snap, "SNAP");
+    println!("{}","| \n".red());
+    display(software.brew, "BREW");
+    display(software.emerge, "EMERGE");
+    display(software.nix, "NIX");
+    display(software.pip, "PIP");
+    println!("{}","| \n".red());
+    display(software.pip3, "PIP3");
+    display(software.cargo, "CARGO");
+    display(software.go, "GO");
+    display(software.maven, "MAVEN");
+    println!("{}","| \n".red());
+    display(software.npm, "NPM");
+    display(software.nuget, "NUGET");
+    display(software.rubygems, "GEM");
+    display(software.exploitdb, "EXDB");
+    println!("{}","| \n".red());
+
+    println!("{}","Updating Software ----------------------------------------------+\n".red());
+
+    
 
 
 }
@@ -114,3 +119,5 @@ fn display(input: bool, name: &str){
         print!("[ ]: {} \t", name);
     };
 }
+
+
