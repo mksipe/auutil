@@ -33,8 +33,6 @@ struct SystemTools {
 
 fn main() {
 
-    println!("\nDetected Software :\n");
-
     let software = SystemTools {
         // Pacakage managers
         apt:        testsoftware("apt"),
@@ -97,12 +95,28 @@ fn main() {
 
     if software.apt == true {
         println!("Updating: {}", "APT".green());
-        Command::new("apt").arg("update").output().expect("Failed to update APT.");
-        Command::new("apt").arg("full-upgrade").output().expect("Failed to upgrade APT.");
+        Command::new("apt").args(["update", "-y"]).output().expect("Failed to update APT.");
+        Command::new("apt").args(["autoclean", "-y"]).output().expect("Failed to upgrade APT.");
+        Command::new("apt").args(["full-upgrade", "-y"]).output().expect("Failed to upgrade APT.");
+        println!("\nRemoving unesessary files.\n");
+        Command::new("apt").args(["autoremove", "-y"]).output().expect("Failed to update APT.");
     } else if software.yum == true {
         println!("Updating: {}", "YUM".green());
         Command::new("yum").arg("check-update").output().expect("Failed to update YUM.");
         Command::new("yum").arg("update").output().expect("Failed to upgrade YUM.");
+    } else if software.pacman == true {
+        println!("Updating: {}", "PACMAN".green());
+        Command::new("pacman").arg("-Syy").output().expect("Failed to update PACMAN.");
+        Command::new("pacman").arg("-Syu").output().expect("Failed to upgrade PACMAN.");
+    } else if software.rpm == true {
+        println!("Cannot update RPM!");
+    } else if software.dpkg == true {
+        println!("DPKG detected, resuming processes, ... ");
+    } else if software.dnf == true {
+        println!("Updating: {}", "DNF".green());
+        Command::new("dnf").args(["upgrade", "--refresh"]).output().expect("Failed to update DNF.");
+        Command::new("dnf").args(["install", "dnf-plugin-system-upgrade"]).output().expect("Failed to install system update package.");
+        Command::new("dnf").args(["system-upgrade", "download", "--releasever=34"]).output().expect("Failed to upgrade DNF.");
     };
 
 }
