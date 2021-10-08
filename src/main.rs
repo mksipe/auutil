@@ -93,10 +93,21 @@ fn main() {
 
     println!("{}","Updating Software ----------------------------------------------+\n".red());
 
-    
+    use std::process::Command;
 
+    if software.apt == true {
+        println!("Updating: {}", "APT".green());
+        Command::new("apt").arg("update").output().expect("Failed to update APT.");
+        Command::new("apt").arg("full-upgrade").output().expect("Failed to upgrade APT.");
+    } else if software.yum == true {
+        println!("Updating: {}", "YUM".green());
+        Command::new("yum").arg("check-update").output().expect("Failed to update YUM.");
+        Command::new("yum").arg("update").output().expect("Failed to upgrade YUM.");
+    };
 
 }
+
+
 
 
 
