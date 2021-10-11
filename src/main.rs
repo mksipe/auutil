@@ -17,7 +17,7 @@ struct SystemTools {
     // Language package managers
     pip:        bool,
     pip3:       bool,
-    cargo:      bool,
+    rustup:     bool,
     go:         bool,
     maven:      bool,
     npm:        bool,
@@ -50,7 +50,7 @@ fn main() {
         // Language package managers
         pip:        testsoftware("pip"),
         pip3:       testsoftware("pip3"),
-        cargo:      testsoftware("cargo"),
+        rustup:     testsoftware("rustup"),
         go:         testsoftware("go"),
         maven:      testsoftware("mvn"),
         npm:        testsoftware("npm"),
@@ -79,7 +79,7 @@ fn main() {
     display(software.pip, "PIP");
     println!("{}","| \n".red());
     display(software.pip3, "PIP3");
-    display(software.cargo, "CARGO");
+    display(software.rustup, "RUSTUP");
     display(software.go, "GO");
     display(software.maven, "MAVEN");
     println!("{}","| \n".red());
@@ -90,51 +90,81 @@ fn main() {
     println!("{}","| \n".red());
 
     println!("{}","Updating Software ----------------------------------------------+\n".red());
-
+    use indicatif::ProgressBar;
     use std::process::Command;
-
-    if software.apt == true {
-        println!("Updating: {}", "APT".green());
-        Command::new("apt").args(["update", "-y"]).output().expect("Failed to update APT.");
-        Command::new("apt").args(["autoclean", "-y"]).output().expect("Failed to upgrade APT.");
-        Command::new("apt").args(["full-upgrade", "-y"]).output().expect("Failed to upgrade APT.");
-        println!("\nRemoving unnesessary files.\n");
-        Command::new("apt").args(["autoremove", "-y"]).output().expect("Failed to update APT.");
-    };
-    if software.yum == true {
-        println!("Updating: {}", "YUM".green());
-        Command::new("yum").arg("check-update").output().expect("Failed to update YUM.");
-        Command::new("yum").arg("update").output().expect("Failed to upgrade YUM.");
-    };
-    if software.pacman == true {
-        println!("Updating: {}", "PACMAN".green());
-        Command::new("pacman").arg("-Syy").output().expect("Failed to update PACMAN.");
-        Command::new("pacman").arg("-Syu").output().expect("Failed to upgrade PACMAN.");
-    };
-    if software.dnf == true {
-        println!("Updating: {}", "DNF".green());
-        Command::new("dnf").args(["upgrade", "--refresh"]).output().expect("Failed to update DNF.");
-        Command::new("dnf").args(["install", "dnf-plugin-system-upgrade"]).output().expect("Failed to install system update package.");
-        Command::new("dnf").args(["system-upgrade", "download", "--releasever=34"]).output().expect("Failed to upgrade DNF.");
-    };
-    if software.zypper == true {
-        println!("Updating: {}", "ZYPPER".green());
-        Command::new("zypper").arg("refresh").output().expect("Failed to update ZYPPER.");
-        Command::new("zypper").arg("update").output().expect("Failed to upgrade DNF.");
-    };
-    if software.snap == true {
-        println!("Updating: {}", "SNAP".green());
-        Command::new("snap").arg("refresh").output().expect("Failed to update SNAP.");
-    };
-    if software.brew == true {
-        println!("Updating: {}", "BREW".green());
-        Command::new("brew").arg("update").output().expect("Failed to update BREW.");
-        Command::new("brew").arg("upgrade").output().expect("Failed to upgrade BREW.");
-    };
-
+    let p = ProgressBar::new_spinner();
+        if software.apt == true {
+            p.set_message("Processing ... APT\t:\tUpdating");
+            Command::new("apt").args(["update", "-y"]).output().expect("Failed to update APT.");
+            Command::new("apt").args(["autoclean", "-y"]).output().expect("Failed to upgrade APT.");
+            p.set_message("Processing ... APT\t:\tUpgrading");
+            Command::new("apt").args(["full-upgrade", "-y"]).output().expect("Failed to upgrade APT.");
+            p.set_message("Processing ... APT\t:\tCleaning");
+            Command::new("apt").args(["autoremove", "-y"]).output().expect("Failed to update APT.");
+            p.set_message("Processing ... APT\t:\tDone");
+        } else if software.yum == true {
+            p.set_message("Processing ... YUM\t:\tUpdate");
+            Command::new("yum").arg("check-update").output().expect("Failed to update YUM.");
+            p.set_message("Processing ... YUM\t:\tUpgrade");
+            Command::new("yum").arg("update").output().expect("Failed to upgrade YUM.");
+        } else if software.pacman == true {
+            p.set_message("Processing ... PACMAN\t:\tUpdate");
+            Command::new("pacman").arg("-Syy").output().expect("Failed to update PACMAN.");
+            p.set_message("Processing ... PACMAN\t:\tUpgrade");
+            Command::new("pacman").arg("-Syu").output().expect("Failed to upgrade PACMAN.");
+            p.set_message("Processing ... PACMAN\t:\tDONE");
+        } else if software.dnf == true {
+            p.set_message("Processing ... DNF\t:\tupdate");
+            Command::new("dnf").args(["upgrade", "--refresh"]).output().expect("Failed to update DNF.");
+            p.set_message("Processing ... DNF\t:\tInstall");
+            Command::new("dnf").args(["install", "dnf-plugin-system-upgrade"]).output().expect("Failed to install system update package.");
+            p.set_message("Processing ... DNF\t:\tUpgrade");
+            Command::new("dnf").args(["system-upgrade", "download", "--releasever=34"]).output().expect("Failed to upgrade DNF.");
+            p.set_message("Processing ... DNF\t:\tDone");
+        } else if software.zypper == true {
+            p.set_message("Processing ... ZYPPER\t:\tRefresh");
+            Command::new("zypper").arg("refresh").output().expect("Failed to update ZYPPER.");
+            p.set_message("Processing ... ZYPPER\t:\tUpdate");
+            Command::new("zypper").arg("update").output().expect("Failed to upgrade DNF.");
+            p.set_message("Processing ... ZYPPER\t:\tDone");
+        } else if software.snap == true {
+            p.set_message("Processing ... SNAP\t:\tUpdate");
+            Command::new("snap").arg("refresh").output().expect("Failed to update SNAP.");
+            p.set_message("Processing ... SNAP\t:\tDone");
+        } else if software.brew == true {
+            p.set_message("Processing ... BREW\t:\tUpdate");
+            Command::new("brew").arg("update").output().expect("Failed to update BREW.");
+            p.set_message("Processing ... BREW\t:\tUpgrade");
+            Command::new("brew").arg("upgrade").output().expect("Failed to upgrade BREW.");
+            p.set_message("Processing ... BREW\t:\tDone");
+        } else if software.emerge == true {
+            p.set_message("Processing ... EMERGE\t:\tUpdate");
+            Command::new("emaint").args(["--auto", "sync"]).output().expect("Failed to update EMERGE.");
+            p.set_message("Processing ... EMERGE\t:\tDone");
+        } else if software.nix == true {
+            p.set_message("Processing ... NIX\t:\tUpdate");
+            Command::new("nix-channel").arg("--update").output().expect("Failed to update NIX.");
+            p.set_message("Processing ... NIX\t:\tUpgrade");
+            Command::new("nixos-rebuild").arg("switch").output().expect("Failed to upgrade NIX.");
+            p.set_message("Processing ... NIX\t:\tClean");
+            Command::new("nix-store").args(["--verify", "--check-contents"]).output().expect("Failed to verify dependencied for NIX.");
+            p.set_message("Processing ... NIX\t:\tDone");
+        } else if software.pip == true {
+            p.set_message("Processing ... PIP\t:\tUpdate");
+            Command::new("python").args(["-m", "pip", "install", "--upgrade", "pip"]).output().expect("Failed to update PIP");
+            p.set_message("Processing ... PIP\t:\tDone");
+        } else if software.pip3 == true {
+            p.set_message("Processing ... PIP3\t:\tUpdate");
+            Command::new("python").args(["-m", "pip3", "install", "--upgrade", "pip3"]).output().expect("Failed to update PIP3.");
+            p.set_message("Processing ... PIP3\t:\tDone");
+        } else if software.rustup == true {
+            p.set_message("Processing ... RUSTUP\t:\tUpdate");
+            Command::new("rustup").arg("update").output().expect("Failed to update RUSTUP.");
+            p.set_message("Processing ... RUSTUP\t:\tDone");
+        } else {
+            println!("No updatable software found.");
+        };
 }
-
-
 
 
 
@@ -152,7 +182,7 @@ fn testsoftware(input: &str) -> bool  {
 
 fn display(input: bool, name: &str){
     if input == true {
-        print!("[{}]: {} \t", "X".green(),name);
+        print!("[{}]: {} \t", "^".yellow(),name);
     } else {
         print!("[ ]: {} \t", name);
     };
