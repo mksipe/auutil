@@ -79,7 +79,7 @@ fn main() {
     display(software.npm, "NPM");
     display(software.nuget, "NUGET");
     println!("{}","| \n".red());
-    display(software.rubygems, "GEM");
+    display(software.rubygems, "bundle");
     display(software.exploitdb, "EXDB\t\t\t\t");
     println!("{}","| \n".red());
 
@@ -180,8 +180,11 @@ fn main() {
             Command::new("Update-Package").output().expect("Failed to update NUGET packages.");
             p.set_message("Processing ... NUGET\t:\tDone");
         };
-
-
+        if software.rubygems == true {
+            p.set_message("Processing ... GEM\t:\tUpdate");
+            Command::new("bundle-update").arg("--all").output().expect("Failed to update NUGET executable.");
+            p.set_message("Processing ... GEM\t:\tDONE");
+        };
 }
 
 
@@ -200,7 +203,7 @@ fn testsoftware(input: &str) -> bool  {
 
 fn display(input: bool, name: &str){
     if input == true {
-        print!("[{}]: {} \t", "^".yellow(),name);
+        print!("[{}]: {} \t", "X".white().bold(),name.yellow());
     } else {
         print!("[ ]: {} \t", name);
     };
