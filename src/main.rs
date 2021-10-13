@@ -24,6 +24,7 @@ struct SystemTools {
 
     // Applications 
     exploitdb: bool,
+    gvm:       bool,
 
 
 }
@@ -54,7 +55,8 @@ fn main() {
         rubygems:   testsoftware("gem"),
     
         // Applications 
-        exploitdb: testsoftware("searchsploit"),
+        exploitdb:  testsoftware("searchsploit"),
+        gvm:        testsoftware("gvm"),
     
     };
     println!("{}","Detected Software ----------------------------------------------+\n".red());
@@ -80,7 +82,8 @@ fn main() {
     display(software.nuget, "NUGET");
     println!("{}","| \n".red());
     display(software.rubygems, "bundle");
-    display(software.exploitdb, "EXDB\t\t\t\t");
+    display(software.exploitdb, "EXDB");
+    display(software.gvm, "GVM\t\t");
     println!("{}","| \n".red());
 
     println!("{}","Updating Software ----------------------------------------------+\n".red());
@@ -182,8 +185,13 @@ fn main() {
         };
         if software.rubygems == true {
             p.set_message("Processing ... GEM\t:\tUpdate");
-            Command::new("bundle-update").arg("--all").output().expect("Failed to update NUGET executable.");
+            Command::new("gem").arg("update").output().expect("Failed to update GEM executable.");
             p.set_message("Processing ... GEM\t:\tDONE");
+        };
+        if software.exploitdb == true {
+            p.set_message("Processing ... EXDB\t:\tUpdate");
+            Command::new("searchsploit").arg("-u").output().expect("Failed to update EXPLOITDB.");
+            p.set_message("Processing ... EXDB\t:\tDONE");
         };
 }
 

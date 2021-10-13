@@ -4,5 +4,17 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"editor.fontSize": 11,
+		"editor.cursorStyle": "underline",
+		"editor.bracketPairColorization.enabled": true,
+		"editor.minimap.size": "fill",
+		"editor.suggest.preview": true,
+		"files.autoGuessEncoding": true,
+		"workbench.editor.autoLockGroups": {
+			"jsProfileVisualizer.cpuprofile.table": true,
+			"mainThreadWebview-markdown.preview": true
+		},
+		"workbench.editor.closeOnFileDelete": true
+	}
 }
