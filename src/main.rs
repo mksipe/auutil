@@ -1,6 +1,10 @@
 use colored::*;
 
 struct SystemTools {
+
+    // System
+    osx:       bool,
+
     // Pacakage managers
     apt:        bool,
     yum:        bool,
@@ -25,8 +29,7 @@ struct SystemTools {
     // Applications 
     exploitdb: bool,
     gvm:       bool,
-
-
+    clamav:    bool,
 }
 
 
@@ -56,7 +59,11 @@ fn main() {
     
         // Applications 
         exploitdb:  testsoftware("searchsploit"),
-        gvm:        testsoftware("gvm"),
+        gvm:        testsoftware("gvmd"),
+        clamav:     testsoftware("clamav"),
+        // System
+        osx:        testsoftware("softwareupdate"),
+
     
     };
     println!("{}","Detected Software ----------------------------------------------+\n".red());
@@ -81,9 +88,12 @@ fn main() {
     display(software.npm, "NPM");
     display(software.nuget, "NUGET");
     println!("{}","| \n".red());
-    display(software.rubygems, "bundle");
+    display(software.rubygems, "GEM");
     display(software.exploitdb, "EXDB");
-    display(software.gvm, "GVM\t\t");
+    display(software.gvm, "GVM");
+    display(software.osx, "OSX");
+    println!("{}","| \n".red());
+    display(software.clamav, "CLAMAV\t\t\t\t\t\t");
     println!("{}","| \n".red());
 
     println!("{}","Updating Software ----------------------------------------------+\n".red());
@@ -98,7 +108,7 @@ fn main() {
             Command::new("apt").args(["full-upgrade", "-y"]).output().expect("Failed to upgrade APT.");
             p.set_message("Processing ... APT\t:\tCleaning");
             Command::new("apt").args(["autoremove", "-y"]).output().expect("Failed to update APT.");
-            p.set_message("Processing ... APT\t:\tDone");
+            p.set_message("Processing ... APT\t:\tDone\n");
 
         };
         if software.yum == true {
@@ -112,7 +122,7 @@ fn main() {
             Command::new("pacman").arg("-Syy").output().expect("Failed to update PACMAN.");
             p.set_message("Processing ... PACMAN\t:\tUpgrade");
             Command::new("pacman").arg("-Syu").output().expect("Failed to upgrade PACMAN.");
-            p.set_message("Processing ... PACMAN\t:\tDONE");
+            p.set_message("Processing ... PACMAN\t:\tDONE\n");
         };
         if software.dnf == true {
             p.set_message("Processing ... DNF\t:\tupdate");
@@ -121,31 +131,31 @@ fn main() {
             Command::new("dnf").args(["install", "dnf-plugin-system-upgrade"]).output().expect("Failed to install system update package.");
             p.set_message("Processing ... DNF\t:\tUpgrade");
             Command::new("dnf").args(["system-upgrade", "download", "--releasever=34"]).output().expect("Failed to upgrade DNF.");
-            p.set_message("Processing ... DNF\t:\tDone");
+            p.set_message("Processing ... DNF\t:\tDone\n");
         };
         if software.zypper == true {
             p.set_message("Processing ... ZYPPER\t:\tRefresh");
             Command::new("zypper").arg("refresh").output().expect("Failed to update ZYPPER.");
             p.set_message("Processing ... ZYPPER\t:\tUpdate");
             Command::new("zypper").arg("update").output().expect("Failed to upgrade DNF.");
-            p.set_message("Processing ... ZYPPER\t:\tDone");
+            p.set_message("Processing ... ZYPPER\t:\tDone\n");
         };
         if software.snap == true {
             p.set_message("Processing ... SNAP\t:\tUpdate");
             Command::new("snap").arg("refresh").output().expect("Failed to update SNAP.");
-            p.set_message("Processing ... SNAP\t:\tDone");
+            p.set_message("Processing ... SNAP\t:\tDone\n");
         };
         if software.brew == true {
             p.set_message("Processing ... BREW\t:\tUpdate");
             Command::new("brew").arg("update").output().expect("Failed to update BREW.");
             p.set_message("Processing ... BREW\t:\tUpgrade");
             Command::new("brew").arg("upgrade").output().expect("Failed to upgrade BREW.");
-            p.set_message("Processing ... BREW\t:\tDone");
+            p.set_message("Processing ... BREW\t:\tDone\n");
         };
         if software.emerge == true {
             p.set_message("Processing ... EMERGE\t:\tUpdate");
             Command::new("emaint").args(["--auto", "sync"]).output().expect("Failed to update EMERGE.");
-            p.set_message("Processing ... EMERGE\t:\tDone");
+            p.set_message("Processing ... EMERGE\t:\tDone\n");
         };
         if software.nix == true {
             p.set_message("Processing ... NIX\t:\tUpdate");
@@ -154,45 +164,63 @@ fn main() {
             Command::new("nixos-rebuild").arg("switch").output().expect("Failed to upgrade NIX.");
             p.set_message("Processing ... NIX\t:\tClean");
             Command::new("nix-store").args(["--verify", "--check-contents"]).output().expect("Failed to verify dependencied for NIX.");
-            p.set_message("Processing ... NIX\t:\tDone");
+            p.set_message("Processing ... NIX\t:\tDone\n");
         };
         if software.pip == true {
             p.set_message("Processing ... PIP\t:\tUpdate");
             Command::new("python").args(["-m", "pip", "install", "--upgrade", "pip"]).output().expect("Failed to update PIP");
-            p.set_message("Processing ... PIP\t:\tDone");
+            p.set_message("Processing ... PIP\t:\tDone\n");
         };
         if software.pip3 == true {
            p.set_message("Processing ... PIP3\t:\tUpdate");
             Command::new("python").args(["-m", "pip3", "install", "--upgrade", "pip3"]).output().expect("Failed to update PIP3.");
-            p.set_message("Processing ... PIP3\t:\tDone");
+            p.set_message("Processing ... PIP3\t:\tDone\n");
         };
         if software.rustup == true {
             p.set_message("Processing ... RUSTUP\t:\tUpdate");
             Command::new("rustup").arg("update").output().expect("Failed to update RUSTUP.");
-            p.set_message("Processing ... RUSTUP\t:\tDone");
+            p.set_message("Processing ... RUSTUP\t:\tDone\n");
         };
         if software.npm == true {
             p.set_message("Processing ... NPM\t:\tUpdate");
             Command::new("npm").args(["install", "npm@latest"]).output().expect("Failed to update NPM.");
-            p.set_message("Processing ... NPM\t:\tDONE");
+            p.set_message("Processing ... NPM\t:\tDone\n");
         };
         if software.nuget == true {
             p.set_message("Processing ... NUGET\t:\tUpdate Executable");
             Command::new("nuget").arg("update").output().expect("Failed to update NUGET executable.");
             p.set_message("Processing ... NUGET\t:\tUpdate Software");
             Command::new("Update-Package").output().expect("Failed to update NUGET packages.");
-            p.set_message("Processing ... NUGET\t:\tDone");
+            p.set_message("Processing ... NUGET\t:\tDone\n");
         };
         if software.rubygems == true {
             p.set_message("Processing ... GEM\t:\tUpdate");
-            Command::new("gem").arg("update").output().expect("Failed to update GEM executable.");
-            p.set_message("Processing ... GEM\t:\tDONE");
+            Command::new("gem").args(["update", "--system"]).output().expect("Failed to update GEM executable.");
+            p.set_message("Processing ... GEM\t:\tDone\n");
         };
         if software.exploitdb == true {
             p.set_message("Processing ... EXDB\t:\tUpdate");
             Command::new("searchsploit").arg("-u").output().expect("Failed to update EXPLOITDB.");
-            p.set_message("Processing ... EXDB\t:\tDONE");
+            p.set_message("Processing ... EXDB\t:\tDone\n");
         };
+        if software.gvm == true {
+            p.set_message("Processing ... GVMD\t:\tUpdate");
+            Command::new("gvm-feed-update").output().expect("Failed to update GVMD Feeds.");
+            p.set_message("Processing ... GVMD\t:\tDone\n");
+        };
+        if software.osx == true {
+            p.set_message("Processing ... OSX\t:\tUpdate");
+            Command::new("softwareupdate").args(["-i","-a"]).output().expect("Failed to update GVMD Feeds.");
+            p.set_message("Processing ... OSX\t:\tDone");
+        }
+        if software.clamav == true {
+            p.set_message("Processing ... CLAMAV\t:\tUpdate");
+            Command::new("freshclam").output().expect("Failed to update GVMD Feeds.");
+            p.set_message("Processing ... CLAMAV\t:\tDone");
+        }
+
+        println!("{}","\nSoftware Update Complete ---------------------------------------+\n".red());
+
 }
 
 
