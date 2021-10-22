@@ -97,9 +97,10 @@ fn main() {
     println!("{}","| \n".red());
 
     println!("{}","Updating Software ----------------------------------------------+\n".red());
-    use indicatif::{ProgressBar};
+    use indicatif::{ProgressBar,ProgressStyle};
     use std::process::Command;
     let p = ProgressBar::new_spinner();
+    p.set_style(ProgressStyle::default_bar().template("{msg}"));
         if software.apt == true {
             p.set_message("Processing ... APT\t:\tUpdating");
             Command::new("apt").args(["update", "-y"]).output().expect("Failed to update APT.");
@@ -109,7 +110,6 @@ fn main() {
             Command::new("apt").args(["autoclean", "-y"]).output().expect("Failed to upgrade APT.");
             Command::new("apt").args(["autoremove", "-y"]).output().expect("Failed to update APT.");
             p.finish_with_message("Processing ... APT\t:\tDone\n");
-
         }; 
         if software.yum == true {
             p.set_message("Processing ... YUM\t:\tUpdate");
