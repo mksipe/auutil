@@ -8,4 +8,62 @@ edition = "2018"
 [dependencies]
 which = "4.2.2"
 colored = "2.0.0"
-indicatif = "*"
+
+futures = { version = "0.3.*" }
+
+[dependencies.apt]
+path = "src/apt/"
+
+[dependencies.rust]
+path = "src/rust/"
+
+[dependencies.yum]
+path = "src/yum"
+
+[dependencies.pacman]
+path = "src/pacman"
+
+[dependencies.dnf]
+path = "src/dnf"
+
+[dependencies.zypper]
+path = "src/zypper"
+
+[dependencies.snap]
+path = "src/snap"
+
+[dependencies.brew]
+path = "src/brew"
+
+[dependencies.emerge]
+path = "src/emerge"
+
+[dependencies.nix]
+path = "src/nix"
+
+[dependencies.pip]
+path = "src/pip"
+
+[dependencies.pip3]
+path = "src/pip3"
+
+[dependencies.npm]
+path = "src/npm"
+
+[dependencies.nuget]
+path = "src/nuget"
+
+[dependencies.ruby]
+path = "src/ruby"
+
+[dependencies.exdb]
+path = "src/exdb"
+
+[dependencies.gvm]
+path = "src/gvm"
+
+[dependencies.osx]
+path = "src/osx"
+
+[dependencies.clamav]
+path = "src/clamav"
