@@ -1,24 +1,25 @@
 use colored::*;
-use apt::checkinstallation      as check1;
-use rust::checkinstallation     as check2;
-use yum::checkinstallation      as check3; 
-use pacman::checkinstallation   as check4;
-use dnf::checkinstallation      as check5;
-use zypper::checkinstallation   as check6;
-use snap::checkinstallation     as check7;
-use brew::checkinstallation     as check8;
-use emerge::checkinstallation   as check9;
-use emerge::checkinstallation   as check10;
-use pip::checkinstallation      as check11;
-use pip3::checkinstallation     as check12;
-use npm::checkinstallation      as check13;
-use nuget::checkinstallation    as check14;
-use ruby::checkinstallation     as check15;
-use exdb::checkinstallation     as check16;
-use gvm::checkinstallation      as check17;
-use osx::checkinstallation      as check18;
-use clamav::checkinstallation   as check19;
-
+use apt::checkinstallation          as check1;
+use rust::checkinstallation         as check2;
+use yum::checkinstallation          as check3; 
+use pacman::checkinstallation       as check4;
+use dnf::checkinstallation          as check5;
+use zypper::checkinstallation       as check6;
+use snap::checkinstallation         as check7;
+use brew::checkinstallation         as check8;
+use emerge::checkinstallation       as check9;
+use emerge::checkinstallation       as check10;
+use pip::checkinstallation          as check11;
+use pip3::checkinstallation         as check12;
+use npm::checkinstallation          as check13;
+use nuget::checkinstallation        as check14;
+use ruby::checkinstallation         as check15;
+use exdb::checkinstallation         as check16;
+use gvm::checkinstallation          as check17;
+use osx::checkinstallation          as check18;
+use clamav::checkinstallation       as check19;
+use flatpak::checkinstallation      as check20;
+use metasploit::checkinstallation   as check21;
 
 struct SystemTools {
 
@@ -37,6 +38,8 @@ struct SystemTools {
     brew:       bool,
     emerge:     bool,
     nix:        bool,
+    flatpak:    bool,
+    metasploit: bool,
     
     // Language package managers
     pip:        bool,
@@ -69,6 +72,8 @@ async fn updatefunction() {
         brew:       testsoftware("brew"),
         emerge:     testsoftware("emaint"),
         nix:        testsoftware("nix-env"),
+        flatpak:    testsoftware("flatpak"),
+        metasploit: testsoftware("msfconsole"),
         
         // Language package managers
         pip:        testsoftware("pip"),
@@ -104,6 +109,8 @@ async fn updatefunction() {
     check17(software.gvm);
     check18(software.osx);
     check19(software.clamav);
+    check20(software.flatpak);
+    check21(software.metasploit);
 }
 
 
@@ -123,6 +130,7 @@ fn main() {
         brew:       testsoftware("brew"),
         emerge:     testsoftware("emaint"),
         nix:        testsoftware("nix-env"),
+        flatpak:    testsoftware("flatpak"),
         
         // Language package managers
         pip:        testsoftware("pip"),
@@ -136,6 +144,8 @@ fn main() {
         exploitdb:  testsoftware("searchsploit"),
         gvm:        testsoftware("gvmd"),
         clamav:     testsoftware("clamav"),
+        metasploit: testsoftware("msfconsole"),
+
         // System
         osx:        testsoftware("softwareupdate"),
 
@@ -143,34 +153,20 @@ fn main() {
     };
     println!("{}","Detected Software ----------------------------------------------+\n".red());
         // I am aware this is cringe I will get to it lol.
-    display(software.apt, "APT");
-    display(software.yum, "YUM");
-    display(software.pacman, "PACMAN");
-    display(software.rpm, "RPM");
+    display(software.apt, "APT");display(software.yum, "YUM");display(software.pacman, "PACMAN");display(software.rpm, "RPM");
     println!("{}","| \n".red());
-    display(software.dpkg, "DPKG");
-    display(software.dnf, "DNF");
-    display(software.zypper, "ZYPPER");
-    display(software.snap, "SNAP");
+    display(software.dpkg, "DPKG");display(software.dnf, "DNF");display(software.zypper, "ZYPPER");display(software.snap, "SNAP");
     println!("{}","| \n".red());
-    display(software.brew, "BREW");
-    display(software.emerge, "EMERGE");
-    display(software.nix, "NIX");
-    display(software.pip, "PIP");
+    display(software.brew, "BREW");display(software.emerge, "EMERGE");display(software.nix, "NIX");display(software.pip, "PIP");
     println!("{}","| \n".red());
-    display(software.pip3, "PIP3");
-    display(software.rustup, "RUSTUP");
-    display(software.npm, "NPM");
-    display(software.nuget, "NUGET");
+    display(software.pip3, "PIP3");display(software.rustup, "RUSTUP");display(software.npm, "NPM");display(software.nuget, "NUGET");
     println!("{}","| \n".red());
-    display(software.rubygems, "GEM");
-    display(software.exploitdb, "EXDB");
-    display(software.gvm, "GVM");
-    display(software.osx, "OSX");
+    display(software.rubygems, "GEM");display(software.exploitdb, "EXDB");display(software.gvm, "GVM");display(software.osx, "OSX");
     println!("{}","| \n".red());
-    display(software.clamav, "CLAMAV\t\t\t\t\t\t");
+    display(software.clamav, "CLAMAV");
+    display(software.metasploit, "MSF");
+    display(software.flatpak, "FLATPAK\t\t");
     println!("{}","| \n".red());
-
     println!("{}","Updating Software ----------------------------------------------+\n".red());
     block_on(updatefunction());
     println!("{}","\nSoftware Update Complete ---------------------------------------+\n".red());
