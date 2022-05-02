@@ -8,7 +8,7 @@ use zypper::checkinstallation       as check6;
 use snap::checkinstallation         as check7;
 use brew::checkinstallation         as check8;
 use emerge::checkinstallation       as check9;
-use emerge::checkinstallation       as check10;
+use nix::checkinstallation          as check10;
 use pip::checkinstallation          as check11;
 use pip3::checkinstallation         as check12;
 use npm::checkinstallation          as check13;
@@ -21,156 +21,111 @@ use clamav::checkinstallation       as check19;
 use flatpak::checkinstallation      as check20;
 use metasploit::checkinstallation   as check21;
 
-struct SystemTools {
-
-    // System
-    osx:       bool,
-
-    // Pacakage managers
-    apt:        bool,
-    yum:        bool,
-    pacman:     bool,
-    rpm:        bool,
-    dpkg:       bool,
-    dnf:        bool,
-    zypper:     bool,
-    snap:       bool,
-    brew:       bool,
-    emerge:     bool,
-    nix:        bool,
-    flatpak:    bool,
-    metasploit: bool,
+struct SoftwareProfile<'a> {
     
-    // Language package managers
-    pip:        bool,
-    pip3:       bool,
-    rustup:     bool,
-    npm:        bool,
-    nuget:      bool,
-    rubygems:   bool,
+    // software title
+    title: &'a str,
+    
+    //is it installed?
+    installed: bool,
 
-    // Applications 
-    exploitdb: bool,
-    gvm:       bool,
-    clamav:    bool,
+    //software tyoe
+    stype: &'a str,
+
+    //description
+    desc: &'a str,
 }
-
 
 use futures::executor::block_on;
 
-async fn updatefunction() {
-    let software = SystemTools {
-        // Pacakage managers
-        apt:        testsoftware("apt"),
-        yum:        testsoftware("yum"),
-        pacman:     testsoftware("pacman"),
-        rpm:        testsoftware("rpm"),
-        dpkg:       testsoftware("dpkg"),
-        dnf:        testsoftware("dnf"),
-        zypper:     testsoftware("sypper"),
-        snap:       testsoftware("snap"),
-        brew:       testsoftware("brew"),
-        emerge:     testsoftware("emaint"),
-        nix:        testsoftware("nix-env"),
-        flatpak:    testsoftware("flatpak"),
-        metasploit: testsoftware("msfconsole"),
-        
-        // Language package managers
-        pip:        testsoftware("pip"),
-        pip3:       testsoftware("pip3"),
-        rustup:     testsoftware("rustup"),
-        npm:        testsoftware("npm"),
-        nuget:      testsoftware("nuget"),
-        rubygems:   testsoftware("gem"),
-    
-        // Applications 
-        exploitdb:  testsoftware("searchsploit"),
-        gvm:        testsoftware("gvmd"),
-        clamav:     testsoftware("clamav"),
-        // System
-        osx:        testsoftware("softwareupdate"),
-    };
-    check1(software.apt);
-    check2(software.rustup);
-    check3(software.yum);
-    check4(software.pacman);
-    check5(software.dnf);
-    check6(software.zypper);
-    check7(software.snap);
-    check8(software.brew);
-    check9(software.emerge);
-    check10(software.nix);
-    check11(software.pip);
-    check12(software.pip3);
-    check13(software.npm);
-    check14(software.nuget);
-    check15(software.rubygems);
-    check16(software.exploitdb);
-    check17(software.gvm);
-    check18(software.osx);
-    check19(software.clamav);
-    check20(software.flatpak);
-    check21(software.metasploit);
+fn create_software_profile<'a> (name: &'a str, swtype: &'a str, description: &'a str) -> SoftwareProfile<'a> {
+    SoftwareProfile {
+        title: name,
+        installed: testsoftware(name),
+        stype: swtype,
+        desc: description,
+    }
 }
 
+fn update_and_display_profile<'a> (app: SoftwareProfile<'a>){
+    if app.installed == true {
+        println!("Profile: {} Loaded. ", app.title);
+    }
+}
 
 fn main() {
 
+    //package managers
+    let app1 = create_software_profile("apt", "PM", "APT");
+    let app2 = create_software_profile("yum", "PM", "YUM");
+    let app3 = create_software_profile("pacman", "PM", "PACMAN");
+    let app4 = create_software_profile("rpm", "PM", "RPM");
+    let app5 = create_software_profile("dpkg", "PM", "DPKG");
+    let app6 = create_software_profile("dnf", "PM", "DNF");
+    let app7 = create_software_profile("zypper", "PM", "ZYPPER");
+    let app8 = create_software_profile("snap", "PM", "SNAP");
+    let app9 = create_software_profile("brew", "PM", "BREW");
+    let app10 = create_software_profile("emaint", "PM", "EMERGE");
+    let app11 = create_software_profile("nix-env", "PM", "NIX");
+    let app12 = create_software_profile("flatpak", "PM", "FLATPAK");
 
-    let software = SystemTools {
-        // Pacakage managers
-        apt:        testsoftware("apt"),
-        yum:        testsoftware("yum"),
-        pacman:     testsoftware("pacman"),
-        rpm:        testsoftware("rpm"),
-        dpkg:       testsoftware("dpkg"),
-        dnf:        testsoftware("dnf"),
-        zypper:     testsoftware("sypper"),
-        snap:       testsoftware("snap"),
-        brew:       testsoftware("brew"),
-        emerge:     testsoftware("emaint"),
-        nix:        testsoftware("nix-env"),
-        flatpak:    testsoftware("flatpak"),
-        
-        // Language package managers
-        pip:        testsoftware("pip"),
-        pip3:       testsoftware("pip3"),
-        rustup:     testsoftware("rustup"),
-        npm:        testsoftware("npm"),
-        nuget:      testsoftware("nuget"),
-        rubygems:   testsoftware("gem"),
+    //language package managers
+
+    let app13 = create_software_profile("pip", "LANG", "PYTHON");
+    let app14 = create_software_profile("pip3", "LANG", "PYTHON3");
+    let app15 = create_software_profile("rustup", "LANG", "RUSTUP");
+    let app16 = create_software_profile("npm", "LANG", "NPM");
+    let app17 = create_software_profile("nuget", "LANG", "NUGET");
+    let app18 = create_software_profile("gem", "LANG", "RUBY");
+
+    //application specific
+
+    let app19 = create_software_profile("searchsploit", "APP", "EXPLOITDB");
+    let app20 = create_software_profile("gvmd", "APP", "OpenVAS");
+    let app21 = create_software_profile("searchsploit", "APP", "EXPLOITDB");
+    let app22 = create_software_profile("clamav", "APP", "CLAMAV");
+    let app23 = create_software_profile("msfconsole", "APP", "METASPLOIT");
+
+    //system specific
+
+    let app24 = create_software_profile("softwareupdate", "SYS", "APPLEOSX");
+
+
+
+
+    println!("{}{:-^150}{}", "|", "Detected Software Summary".red(),"+");
+    // I am aware this is cringe I will get to it lol.
+    display(app1.installed, app1.title);
+    display(app2.installed, app2.title);
+    display(app3.installed, app3.title);
+    display(app4.installed, app4.title);
+    display(app5.installed, app5.title);
+    display(app6.installed, app6.title);
+    println!("\n{:>152}","|".red());
+    display(app7.installed, app7.title);
+    display(app8.installed, app8.title);
+    display(app9.installed, app9.title);
+    display(app10.installed, app10.title);
+    display(app11.installed, app11.title);
+    display(app12.installed, app12.title);
+    println!("\n{:>152}","|".red());
+    display(app13.installed, app13.title);
+    display(app14.installed, app14.title);
+    display(app15.installed, app15.title);
+    display(app16.installed, app16.title);
+    display(app17.installed, app17.title);
+    display(app18.installed, app18.title);
+    println!("\n{:>152}","|".red());
+    display(app19.installed, app19.title);
+    display(app20.installed, app20.title);
+    display(app21.installed, app21.title);
+    display(app22.installed, app22.title);
+    display(app23.installed, app23.title);
+    display(app24.installed, app24.title);
+
+    println!("\n{}{:-^150}{}", "|", "Processes ".red(),"+");
+
     
-        // Applications 
-        exploitdb:  testsoftware("searchsploit"),
-        gvm:        testsoftware("gvmd"),
-        clamav:     testsoftware("clamav"),
-        metasploit: testsoftware("msfconsole"),
-
-        // System
-        osx:        testsoftware("softwareupdate"),
-
-    
-    };
-    println!("{}","Detected Software ----------------------------------------------+\n".red());
-        // I am aware this is cringe I will get to it lol.
-    display(software.apt, "APT");display(software.yum, "YUM");display(software.pacman, "PACMAN");display(software.rpm, "RPM");
-    println!("{}","| \n".red());
-    display(software.dpkg, "DPKG");display(software.dnf, "DNF");display(software.zypper, "ZYPPER");display(software.snap, "SNAP");
-    println!("{}","| \n".red());
-    display(software.brew, "BREW");display(software.emerge, "EMERGE");display(software.nix, "NIX");display(software.pip, "PIP");
-    println!("{}","| \n".red());
-    display(software.pip3, "PIP3");display(software.rustup, "RUSTUP");display(software.npm, "NPM");display(software.nuget, "NUGET");
-    println!("{}","| \n".red());
-    display(software.rubygems, "GEM");display(software.exploitdb, "EXDB");display(software.gvm, "GVM");display(software.osx, "OSX");
-    println!("{}","| \n".red());
-    display(software.clamav, "CLAMAV");
-    display(software.metasploit, "MSF");
-    display(software.flatpak, "FLATPAK\t\t");
-    println!("{}","| \n".red());
-    println!("{}","Updating Software ----------------------------------------------+\n".red());
-    block_on(updatefunction());
-    println!("{}","\nSoftware Update Complete ---------------------------------------+\n".red());
-
 }
 
 
@@ -188,9 +143,9 @@ fn testsoftware(input: &str) -> bool  {
 
 fn display(input: bool, name: &str){
     if input == true {
-        print!("[{}]: {} \t", "X".white().bold(),name.yellow());
+        print!("[{}]: {:<20}", "X".white().bold(),name.yellow());
     } else {
-        print!("[ ]: {} \t", name);
+        print!("[ ]: {:<20}", name);
     };
 }
 

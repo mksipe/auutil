@@ -1,5 +1,4 @@
 use std::process::Command;
-
 // Linux only command no need for windows compatibility.
 
 fn update() -> i8 {
