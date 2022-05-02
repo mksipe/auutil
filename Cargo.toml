@@ -67,3 +67,9 @@ path = "src/osx"
 
 [dependencies.clamav]
 path = "src/clamav"
+
+[dependencies.flatpak]
+path = "src/flatpak"
+
+[dependencies.metasploit]
+path = "src/metasploit"
