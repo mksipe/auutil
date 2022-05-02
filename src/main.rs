@@ -47,11 +47,7 @@ fn create_software_profile<'a> (name: &'a str, swtype: &'a str, description: &'a
     }
 }
 
-fn update_and_display_profile<'a> (app: SoftwareProfile<'a>){
-    if app.installed == true {
-        println!("Profile: {} Loaded. ", app.title);
-    }
-}
+
 
 fn main() {
 
@@ -91,42 +87,60 @@ fn main() {
     let app24 = create_software_profile("softwareupdate", "SYS", "APPLEOSX");
 
 
-
+    //create an array of each profile 
+    let profiles: [SoftwareProfile; 24] = [
+        app1,  app2,  app3,  app4,  app5,  app6,  app7,  app8,  app9, 
+        app10, app11, app12, app13, app14, app15, app16, app17, app18, app19, 
+        app20, app21, app22, app23, app24
+    ];
 
     println!("{}{:-^150}{}", "|", "Detected Software Summary".red(),"+");
-    // I am aware this is cringe I will get to it lol.
-    display(app1.installed, app1.title);
-    display(app2.installed, app2.title);
-    display(app3.installed, app3.title);
-    display(app4.installed, app4.title);
-    display(app5.installed, app5.title);
-    display(app6.installed, app6.title);
-    println!("\n{:>152}","|".red());
-    display(app7.installed, app7.title);
-    display(app8.installed, app8.title);
-    display(app9.installed, app9.title);
-    display(app10.installed, app10.title);
-    display(app11.installed, app11.title);
-    display(app12.installed, app12.title);
-    println!("\n{:>152}","|".red());
-    display(app13.installed, app13.title);
-    display(app14.installed, app14.title);
-    display(app15.installed, app15.title);
-    display(app16.installed, app16.title);
-    display(app17.installed, app17.title);
-    display(app18.installed, app18.title);
-    println!("\n{:>152}","|".red());
-    display(app19.installed, app19.title);
-    display(app20.installed, app20.title);
-    display(app21.installed, app21.title);
-    display(app22.installed, app22.title);
-    display(app23.installed, app23.title);
-    display(app24.installed, app24.title);
 
-    println!("\n{}{:-^150}{}", "|", "Processes ".red(),"+");
+    for i in &profiles {
+ 
+        display(i.installed, i.title);
+        print!("{:>5} ", i.stype);
+        println!("{:>5}", i.desc);
+
+    }
+
+    println!("\n{}{:-^150}{}", "|", "Processes".red(),"+");
+
+
+    for i in &profiles {
+        match i.title {
+            "apt"           => check1(  i.installed),
+            "rust"          => check2(  i.installed),
+            "yum"           => check3(  i.installed),
+            "pacman"        => check4(  i.installed),
+            "dnf"           => check5(  i.installed),
+            "zypper"        => check6(  i.installed),
+            "snap"          => check7(  i.installed),
+            "brew"          => check8(  i.installed),
+            "emaint"        => check9(  i.installed),
+            "nix-env"       => check10( i.installed),
+            "pip"           => check11( i.installed),
+            "pip3"          => check12( i.installed),
+            "npm"           => check13( i.installed),
+            "nuget"         => check14( i.installed),
+            "gem"           => check15( i.installed),
+            "searchsploit"  => check16( i.installed),
+            "gvmd"          => check17( i.installed),
+            "softwareupdate"=> check18( i.installed),
+            "clamav"        => check19( i.installed),
+            "flatpak"       => check20( i.installed),
+            "msfconsole"    => check21( i.installed),
+            _               => print!(""),
+        }
+    }
+
+
+    println!("{}{:-^150}{}", "|", "Software Update Complete".red(),"+");
+
 
     
 }
+
 
 
 fn testsoftware(input: &str) -> bool  {
@@ -143,9 +157,9 @@ fn testsoftware(input: &str) -> bool  {
 
 fn display(input: bool, name: &str){
     if input == true {
-        print!("[{}]: {:<20}", "X".white().bold(),name.yellow());
+        print!("[{}]: {:<15}", "X".white().bold(),name.yellow());
     } else {
-        print!("[ ]: {:<20}", name);
+        print!("[ ]: {:<15}", name);
     };
 }
 
