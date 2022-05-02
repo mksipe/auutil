@@ -110,7 +110,7 @@ fn main() {
     for i in &profiles {
         match i.title {
             "apt"           => check1(  i.installed),
-            "rust"          => check2(  i.installed),
+            "rustup"          => check2(  i.installed),
             "yum"           => check3(  i.installed),
             "pacman"        => check4(  i.installed),
             "dnf"           => check5(  i.installed),
