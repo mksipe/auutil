@@ -36,7 +36,7 @@ struct SoftwareProfile<'a> {
     desc: &'a str,
 }
 
-use futures::executor::block_on;
+//use futures::executor::block_on;
 
 fn create_software_profile<'a> (name: &'a str, swtype: &'a str, description: &'a str) -> SoftwareProfile<'a> {
     SoftwareProfile {
@@ -76,22 +76,21 @@ fn main() {
 
     //application specific
 
-    let app19 = create_software_profile("searchsploit", "APP", "EXPLOITDB");
-    let app20 = create_software_profile("gvmd", "APP", "OpenVAS");
-    let app21 = create_software_profile("searchsploit", "APP", "EXPLOITDB");
-    let app22 = create_software_profile("clamav", "APP", "CLAMAV");
-    let app23 = create_software_profile("msfconsole", "APP", "METASPLOIT");
+    let app19 = create_software_profile("gvmd", "APP", "OpenVAS");
+    let app20 = create_software_profile("searchsploit", "APP", "EXPLOITDB");
+    let app21 = create_software_profile("clamav", "APP", "CLAMAV");
+    let app22 = create_software_profile("msfconsole", "APP", "METASPLOIT");
 
     //system specific
 
-    let app24 = create_software_profile("softwareupdate", "SYS", "APPLEOSX");
+    let app23 = create_software_profile("softwareupdate", "SYS", "APPLEOSX");
 
 
     //create an array of each profile 
-    let profiles: [SoftwareProfile; 24] = [
+    let profiles: [SoftwareProfile; 23] = [
         app1,  app2,  app3,  app4,  app5,  app6,  app7,  app8,  app9, 
         app10, app11, app12, app13, app14, app15, app16, app17, app18, app19, 
-        app20, app21, app22, app23, app24
+        app20, app21, app22, app23
     ];
 
     println!("{}{:-^150}{}", "|", "Detected Software Summary".red(),"+");
