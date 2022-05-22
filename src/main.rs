@@ -52,38 +52,38 @@ fn create_software_profile<'a> (name: &'a str, swtype: &'a str, description: &'a
 fn main() {
 
     //package managers
-    let app1 = create_software_profile("apt", "PM", "APT");
-    let app2 = create_software_profile("yum", "PM", "YUM");
-    let app3 = create_software_profile("pacman", "PM", "PACMAN");
-    let app4 = create_software_profile("rpm", "PM", "RPM");
-    let app5 = create_software_profile("dpkg", "PM", "DPKG");
-    let app6 = create_software_profile("dnf", "PM", "DNF");
-    let app7 = create_software_profile("zypper", "PM", "ZYPPER");
-    let app8 = create_software_profile("snap", "PM", "SNAP");
-    let app9 = create_software_profile("brew", "PM", "BREW");
-    let app10 = create_software_profile("emaint", "PM", "EMERGE");
-    let app11 = create_software_profile("nix-env", "PM", "NIX");
-    let app12 = create_software_profile("flatpak", "PM", "FLATPAK");
+    let app1 = create_software_profile("apt", "Package Manager", "APT is a management system for software packages.");
+    let app2 = create_software_profile("yum", "Pacakge Manager", "yum is an interactive, rpm based, package manager.");
+    let app3 = create_software_profile("pacman", "Package Manager", "Manages Archlinux packages ");
+    let app4 = create_software_profile("rpm", "Package Manager", "rpm is a powerful Package Manager, which can be used to build, install, query, verify, update, and erase individual software packages. ");
+    let app5 = create_software_profile("dpkg", "Package Manager", "dpkg is a tool to install, build, remove and manage Debian packages.");
+    let app6 = create_software_profile("dnf", "Package Manager", "DNF is a software package manager that installs, updates, and removes packages on Fedora and is the successor to YUM ");
+    let app7 = create_software_profile("zypper", "Package Manager", "zypper is a command-line interface to ZYpp system management library (libzypp).");
+    let app8 = create_software_profile("snap", "Package Manager", " The snap tool interacts with the snapd daemon to control the snappy software platform. ");
+    let app9 = create_software_profile("brew", "Package Manager", "Homebrew is the easiest and most flexible way to install the UNIX tools Apple didn't include with macOS. ");
+    let app10 = create_software_profile("emaint", "Package Manager", "The emaint program provides a command line interface to package management health checks and maintenance.  ");
+    let app11 = create_software_profile("nix-env", "Package Manager", "The command nix-env is used to manipulate Nix user environments.");
+    let app12 = create_software_profile("flatpak", "Package Manager", "flatpak is a tool for managing applications and the runtimes they use.");
 
     //language package managers
 
-    let app13 = create_software_profile("pip", "LANG", "PYTHON");
-    let app14 = create_software_profile("pip3", "LANG", "PYTHON3");
-    let app15 = create_software_profile("rustup", "LANG", "RUSTUP");
-    let app16 = create_software_profile("npm", "LANG", "NPM");
-    let app17 = create_software_profile("nuget", "LANG", "NUGET");
-    let app18 = create_software_profile("gem", "LANG", "RUBY");
+    let app13 = create_software_profile("pip", "Language", "Python is an interpreted, interactive, object-oriented programming language that combines remarkable power with very clear syntax. ");
+    let app14 = create_software_profile("pip3", "Language", "Python is an interpreted, interactive, object-oriented programming language that combines remarkable power with very clear syntax. ");
+    let app15 = create_software_profile("rustup", "Language", " rustup is an installer for the systems programming language Rust ");
+    let app16 = create_software_profile("npm", "Language", "npm is the package manager for the Node JavaScript platform.");
+    let app17 = create_software_profile("nuget", "Language", "The NuGet Command Line Interface (CLI), nuget.exe, provides the full extent of NuGet functionality to install, create, publish, and manage packages without making any changes to project files.");
+    let app18 = create_software_profile("gem", "Language", "Ruby is an interpreted scripting language for quick and easy object-oriented programming.");
 
     //application specific
 
-    let app19 = create_software_profile("gvmd", "APP", "OpenVAS");
-    let app20 = create_software_profile("searchsploit", "APP", "EXPLOITDB");
-    let app21 = create_software_profile("clamav", "APP", "CLAMAV");
-    let app22 = create_software_profile("msfconsole", "APP", "METASPLOIT");
+    let app19 = create_software_profile("gvmd", "Application", "The OpenVAS Security Scanner is a security auditing tool made up of two parts: a server, and a client. The server, openvasd is in charge of the attacks, whereas the client OpenVAS-Client provides an interface to the user. ");
+    let app20 = create_software_profile("searchsploit", "Application", "searchsploit, a command line search tool for Exploit-DB ");
+    let app21 = create_software_profile("clamav", "Application", "clamscan is a command line anti-virus scanner. ");
+    let app22 = create_software_profile("msfconsole", "Application", "MSFconsole provides a command line interface to access and work with the Metasploit Framework. ");
 
     //system specific
 
-    let app23 = create_software_profile("softwareupdate", "SYS", "APPLEOSX");
+    let app23 = create_software_profile("softwareupdate", "System", "Apple update utility");
 
 
     //create an array of each profile 
@@ -109,7 +109,7 @@ fn main() {
     for i in &profiles {
         match i.title {
             "apt"           => check1(  i.installed),
-            "rustup"          => check2(  i.installed),
+            "rustup"        => check2(  i.installed),
             "yum"           => check3(  i.installed),
             "pacman"        => check4(  i.installed),
             "dnf"           => check5(  i.installed),

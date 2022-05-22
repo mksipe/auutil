@@ -16,7 +16,7 @@ dependencies = [
 
 [[package]]
 name = "auutil"
-version = "0.1.0"
+version = "0.2.2"
 dependencies = [
  "apt 0.1.0",
  "brew 0.1.0",
@@ -25,8 +25,10 @@ dependencies = [
  "dnf 0.1.0",
  "emerge 0.1.0",
  "exdb 0.1.0",
+ "flatpak 0.1.0",
  "futures 0.3.18 (registry+https://github.com/rust-lang/crates.io-index)",
  "gvm 0.1.0",
+ "metasploit 0.1.0",
  "nix 0.1.0",
  "npm 0.1.0",
  "nuget 0.1.0",
@@ -75,6 +77,10 @@ version = "0.1.0"
 
 [[package]]
 name = "exdb"
+version = "0.1.0"
+
+[[package]]
+name = "flatpak"
 version = "0.1.0"
 
 [[package]]
@@ -183,6 +189,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "memchr"
 version = "2.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "metasploit"
+version = "0.1.0"
 
 [[package]]
 name = "nix"
