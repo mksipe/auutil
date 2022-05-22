@@ -1,4 +1,5 @@
 use colored::*;
+use std::include_str;
 use apt::checkinstallation          as check1;
 use rust::checkinstallation         as check2;
 use yum::checkinstallation          as check3; 
@@ -20,6 +21,8 @@ use osx::checkinstallation          as check18;
 use clamav::checkinstallation       as check19;
 use flatpak::checkinstallation      as check20;
 use metasploit::checkinstallation   as check21;
+
+const LOCALGITHASH: &str = include_str!("../.git/refs/heads/main");
 
 struct SoftwareProfile<'a> {
     
@@ -94,7 +97,7 @@ fn main() {
     ];
 
     println!("{}{:-^150}{}", "|", "Detected Software Summary".red(),"+");
-
+    println!("AUUTIL Version: {}", LOCALGITHASH.yellow().bold());
     for i in &profiles {
  
         display(i.installed, i.title);
