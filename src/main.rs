@@ -79,7 +79,7 @@ fn main() {
 
     //application specific
 
-    let app19 = create_software_profile("gvmd", "Application", "The OpenVAS Security Scanner is a security auditing tool made up of two parts: a server, and a client. The server, openvasd is in charge of the attacks, whereas the client OpenVAS-Client provides an interface to the user. ");
+    let app19 = create_software_profile("gvmd", "Application", "The OpenVAS Security Scanner is a security auditing tool made up of two parts: a server, and a client.");
     let app20 = create_software_profile("searchsploit", "Application", "searchsploit, a command line search tool for Exploit-DB ");
     let app21 = create_software_profile("clamav", "Application", "clamscan is a command line anti-virus scanner. ");
     let app22 = create_software_profile("msfconsole", "Application", "MSFconsole provides a command line interface to access and work with the Metasploit Framework. ");
