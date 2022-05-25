@@ -101,8 +101,7 @@ fn main() {
     for i in &profiles {
  
         display(i.installed, i.title);
-        print!("{:>5} ", i.stype);
-        println!("{:>5}", i.desc);
+        println!("{:>5}\t{:>5}", i.stype, i.desc,);
 
     }
 
