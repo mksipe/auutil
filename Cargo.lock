@@ -16,7 +16,7 @@ dependencies = [
 
 [[package]]
 name = "auutil"
-version = "0.2.2"
+version = "0.2.4"
 dependencies = [
  "apt 0.1.0",
  "brew 0.1.0",

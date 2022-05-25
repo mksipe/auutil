@@ -72,7 +72,7 @@ fn main() {
 
     let app13 = create_software_profile("pip", "Language", "Python is an interpreted, interactive, object-oriented programming language that combines remarkable power with very clear syntax. ");
     let app14 = create_software_profile("pip3", "Language", "Python is an interpreted, interactive, object-oriented programming language that combines remarkable power with very clear syntax. ");
-    let app15 = create_software_profile("rustup", "Language", " rustup is an installer for the systems programming language Rust ");
+    let app15 = create_software_profile("rustup", "Language", "rustup is an installer for the systems programming language Rust ");
     let app16 = create_software_profile("npm", "Language", "npm is the package manager for the Node JavaScript platform.");
     let app17 = create_software_profile("nuget", "Language", "The NuGet Command Line Interface (CLI), nuget.exe, provides the full extent of NuGet functionality to install, create, publish, and manage packages without making any changes to project files.");
     let app18 = create_software_profile("gem", "Language", "Ruby is an interpreted scripting language for quick and easy object-oriented programming.");
