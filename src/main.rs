@@ -21,6 +21,7 @@ use osx::checkinstallation          as check18;
 use clamav::checkinstallation       as check19;
 use flatpak::checkinstallation      as check20;
 use metasploit::checkinstallation   as check21;
+use perl::checkinstallation         as check22;
 
 const LOCALGITHASH: &str = include_str!("../.git/refs/heads/main");
 
@@ -62,7 +63,7 @@ fn main() {
     let app5 = create_software_profile("dpkg", "Package Manager", "dpkg is a tool to install, build, remove and manage Debian packages.");
     let app6 = create_software_profile("dnf", "Package Manager", "DNF is a software package manager that installs, updates, and removes packages on Fedora and is the successor to YUM ");
     let app7 = create_software_profile("zypper", "Package Manager", "zypper is a command-line interface to ZYpp system management library (libzypp).");
-    let app8 = create_software_profile("snap", "Package Manager", " The snap tool interacts with the snapd daemon to control the snappy software platform. ");
+    let app8 = create_software_profile("snap", "Package Manager", "The snap tool interacts with the snapd daemon to control the snappy software platform. ");
     let app9 = create_software_profile("brew", "Package Manager", "Homebrew is the easiest and most flexible way to install the UNIX tools Apple didn't include with macOS. ");
     let app10 = create_software_profile("emaint", "Package Manager", "The emaint program provides a command line interface to package management health checks and maintenance.  ");
     let app11 = create_software_profile("nix-env", "Package Manager", "The command nix-env is used to manipulate Nix user environments.");
@@ -76,7 +77,7 @@ fn main() {
     let app16 = create_software_profile("npm", "Language", "npm is the package manager for the Node JavaScript platform.");
     let app17 = create_software_profile("nuget", "Language", "The NuGet Command Line Interface (CLI), nuget.exe, provides the full extent of NuGet functionality to install, create, publish, and manage packages without making any changes to project files.");
     let app18 = create_software_profile("gem", "Language", "Ruby is an interpreted scripting language for quick and easy object-oriented programming.");
-
+    let app24 = create_software_profile("cpan", "Language", "This script provides a command interface (not a shell) to CPAN.");
     //application specific
 
     let app19 = create_software_profile("gvmd", "Application", "The OpenVAS Security Scanner is a security auditing tool made up of two parts: a server, and a client.");
@@ -90,10 +91,10 @@ fn main() {
 
 
     //create an array of each profile 
-    let profiles: [SoftwareProfile; 23] = [
+    let profiles: [SoftwareProfile; 24] = [
         app1,  app2,  app3,  app4,  app5,  app6,  app7,  app8,  app9, 
         app10, app11, app12, app13, app14, app15, app16, app17, app18, app19, 
-        app20, app21, app22, app23
+        app20, app21, app22, app23, app24
     ];
 
     println!("{}{:-^150}{}", "|", "Detected Software Summary".red(),"+");
@@ -125,6 +126,7 @@ fn main() {
             "npm"           => check13( i.installed),
             "nuget"         => check14( i.installed),
             "gem"           => check15( i.installed),
+            "cpan"          => check22( i.installed),
             "searchsploit"  => check16( i.installed),
             "gvmd"          => check17( i.installed),
             "softwareupdate"=> check18( i.installed),
