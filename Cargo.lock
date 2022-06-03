@@ -16,7 +16,7 @@ dependencies = [
 
 [[package]]
 name = "auutil"
-version = "0.2.4"
+version = "0.2.6"
 dependencies = [
  "apt 0.1.0",
  "brew 0.1.0",
@@ -34,6 +34,7 @@ dependencies = [
  "nuget 0.1.0",
  "osx 0.1.0",
  "pacman 0.1.0",
+ "perl 0.1.0",
  "pip 0.1.0",
  "pip3 0.1.0",
  "ruby 0.1.0",
@@ -212,6 +213,10 @@ version = "0.1.0"
 
 [[package]]
 name = "pacman"
+version = "0.1.0"
+
+[[package]]
+name = "perl"
 version = "0.1.0"
 
 [[package]]
