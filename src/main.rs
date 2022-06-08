@@ -23,6 +23,8 @@ use flatpak::checkinstallation      as check20;
 use metasploit::checkinstallation   as check21;
 use perl::checkinstallation         as check22;
 
+
+// This string is captured at compile time and contains the git hash of the current software version.
 const LOCALGITHASH: &str = include_str!("../.git/refs/heads/main");
 
 struct SoftwareProfile<'a> {
@@ -56,6 +58,7 @@ fn create_software_profile<'a> (name: &'a str, swtype: &'a str, description: &'a
 fn main() {
 
     //package managers
+
     let app1 = create_software_profile("apt", "Package Manager", "APT is a management system for software packages.");
     let app2 = create_software_profile("yum", "Pacakge Manager", "yum is an interactive, rpm based, package manager.");
     let app3 = create_software_profile("pacman", "Package Manager", "Manages Archlinux packages ");
@@ -78,6 +81,7 @@ fn main() {
     let app17 = create_software_profile("nuget", "Language", "The NuGet Command Line Interface (CLI), nuget.exe, provides the full extent of NuGet functionality to install, create, publish, and manage packages without making any changes to project files.");
     let app18 = create_software_profile("gem", "Language", "Ruby is an interpreted scripting language for quick and easy object-oriented programming.");
     let app24 = create_software_profile("cpan", "Language", "This script provides a command interface (not a shell) to CPAN.");
+
     //application specific
 
     let app19 = create_software_profile("gvmd", "Application", "The OpenVAS Security Scanner is a security auditing tool made up of two parts: a server, and a client.");
@@ -133,7 +137,7 @@ fn main() {
             "clamav"        => check19( i.installed),
             "flatpak"       => check20( i.installed),
             "msfconsole"    => check21( i.installed),
-            _               => print!(""),
+            _               => continue,
         }
     }
 
