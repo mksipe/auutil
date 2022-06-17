@@ -57,7 +57,7 @@ fn create_software_profile<'a> (name: &'a str, swtype: &'a str, description: &'a
         installed: testsoftware(name),
         stype: swtype,
         desc: description,
-        returnvalue: vec![0],
+        returnvalue: vec![-5],
     }
 }
 
@@ -103,7 +103,7 @@ fn main() {
 
 
     //create an array of each profile 
-    let profiles: [SoftwareProfile; PROFCOUNT] = [
+    let mut profiles: [SoftwareProfile; PROFCOUNT] = [
         app1,  app2,  app3,  app4,  app5,  app6,  app7,  app8,  app9, 
         app10, app11, app12, app13, app14, app15, app16, app17, app18, app19, 
         app20, app21, app22, app23, app24
@@ -124,30 +124,30 @@ fn main() {
     //Execution of updates
     println!("\n{}{:-^150}{}", "|", "Processes".red(),"+");
 
-    for app in profiles.iter() {
+    for app in profiles.iter_mut() {
         match app.title {
-            "apt"           => check1(  app.installed),
-            "rustup"        => check2(  app.installed),
-            "yum"           => check3(  app.installed),
-            "pacman"        => check4(  app.installed),
-            "dnf"           => check5(  app.installed),
-            "zypper"        => check6(  app.installed),
-            "snap"          => check7(  app.installed),
-            "brew"          => check8(  app.installed),
-            "emaint"        => check9(  app.installed),
-            "nix-env"       => check10( app.installed),
-            "pip"           => check11( app.installed),
-            "pip3"          => check12( app.installed),
-            "npm"           => check13( app.installed),
-            "nuget"         => check14( app.installed),
-            "gem"           => check15( app.installed),
-            "cpan"          => check22( app.installed),
-            "searchsploit"  => check16( app.installed),
-            "gvmd"          => check17( app.installed),
-            "softwareupdate"=> check18( app.installed),
-            "clamav"        => check19( app.installed),
-            "flatpak"       => check20( app.installed),
-            "msfconsole"    => check21( app.installed),
+            "apt"           => app.returnvalue = check1(  app.installed),
+            "rustup"        => app.returnvalue = check2(  app.installed),
+            "yum"           => app.returnvalue = check3(  app.installed),
+            "pacman"        => app.returnvalue = check4(  app.installed),
+            "dnf"           => app.returnvalue = check5(  app.installed),
+            "zypper"        => app.returnvalue = check6(  app.installed),
+            "snap"          => app.returnvalue = check7(  app.installed),
+            "brew"          => app.returnvalue = check8(  app.installed),
+            "emaint"        => app.returnvalue = check9(  app.installed),
+            "nix-env"       => app.returnvalue = check10( app.installed),
+            "pip"           => app.returnvalue = check11( app.installed),
+            "pip3"          => app.returnvalue = check12( app.installed),
+            "npm"           => app.returnvalue = check13( app.installed),
+            "nuget"         => app.returnvalue = check14( app.installed),
+            "gem"           => app.returnvalue = check15( app.installed),
+            "cpan"          => app.returnvalue = check22( app.installed),
+            "searchsploit"  => app.returnvalue = check16( app.installed),
+            "gvmd"          => app.returnvalue = check17( app.installed),
+            "softwareupdate"=> app.returnvalue = check18( app.installed),
+            "clamav"        => app.returnvalue = check19( app.installed),
+            "flatpak"       => app.returnvalue = check20( app.installed),
+            "msfconsole"    => app.returnvalue = check21( app.installed),
             _               => continue,
         };
         
@@ -156,7 +156,12 @@ fn main() {
     //Final Banner
     println!("{}{:-^150}{}", "|", "Software Update Report".red(),"+");
     for app in profiles.iter(){
-        println!("{:<15}\treturned:\t{:?}", app.title ,app.returnvalue);
+        if app.installed == true {
+            println!("{:<15}\treturned:\t{:?}", app.title ,app.returnvalue);
+        } else {
+            println!("{:<15}\treturned:\t{}", app.title ,"Not Installed");
+
+        }
     }
     println!("{}{:-^150}{}", "|", "Updates Complete".red(),"+");
 
