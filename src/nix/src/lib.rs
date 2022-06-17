@@ -1,29 +1,24 @@
 use std::process::Command;
 
 // Linux only command no need for windows compatibility.
+const ERRMSG:&str = "Something went wrong";
 
-fn update() -> i8 {
-    match Command::new("sh").args(&["-c","nix-channel --update"]).status() {
-        Err(_e)         => return 1,
-        Ok(_process)    => return 0,
-    };
+fn update() -> i32 {
+    let cmd = Command::new("sh").args(&["-c","nix-channel --update"]).status().expect(ERRMSG);
+    return cmd.code().unwrap();
 }
 
-fn upgrade() -> i8 {
-    match Command::new("sh").args(&["-c","nixos-rebuild switch"]).status() {
-        Err(_e)         => return 1,
-        Ok(_process)    => return 0,
-    };
+fn upgrade() -> i32 {
+    let cmd = Command::new("sh").args(&["-c","nixos-rebuild switch"]).status().expect(ERRMSG);
+    return cmd.code().unwrap();
 }
 
-fn clean() -> i8 {
-    match Command::new("sh").args(&["-c", "nix-store --verify --check-contents"]).status(){
-        Err(_e)         => return 1,
-        Ok(_process)    => return 0,        
-    }
+fn clean() -> i32 {
+    let cmd = Command::new("sh").args(&["-c", "nix-store --verify --check-contents"]).status().expect(ERRMSG);
+    return cmd.code().unwrap();
 }
 
-pub fn checkinstallation(input: bool) -> Vec<i8> {
+pub fn checkinstallation(input: bool) -> Vec<i32> {
     if input == true {
         return vec![update(), upgrade(), clean()];
     } else {

@@ -45,7 +45,7 @@ struct SoftwareProfile<'a> {
     desc: &'a str,
 
     //return values
-    returnvalue: Vec<i8>,
+    returnvalue: Vec<i32>,
     
 }
 

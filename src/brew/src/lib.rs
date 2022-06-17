@@ -1,22 +1,19 @@
 use std::process::Command;
+const ERRMSG:&str = "Something went wrong";
 
 // Cross system no need for windows support.
 
-fn update() -> i8 {
-    match Command::new("sh").args(&["-c","brew update"]).status() {
-        Err(_e)         => return 1,
-        Ok(_process)    => return 0,
-    };
+fn update() -> i32 {
+    let cmd = Command::new("sh").args(&["-c","brew update"]).status().expect(ERRMSG);
+    return cmd.code().unwrap();
 }
 
-fn upgrade() -> i8 {
-    match Command::new("sh").args(&["-c","brew updgrade"]).status() {
-        Err(_e)         => return 1,
-        Ok(_process)    => return 0,
-    };
+fn upgrade() -> i32 {
+    let cmd =  Command::new("sh").args(&["-c","brew upgrade"]).status().expect(ERRMSG);
+    return cmd.code().unwrap();
 }
 
-pub fn checkinstallation(input: bool) -> Vec<i8> {
+pub fn checkinstallation(input: bool) -> Vec<i32> {
     if input == true {
         return vec![update(), upgrade()];
     } else {

@@ -1,43 +1,35 @@
 use std::process::Command;
 
 // Linux only command no need for windows compatibility.
+const ERRMSG:&str = "Something went wrong";
 
-fn update() -> i8 {
-    match Command::new("sh").args(&["-c","apt update -y"]).status() {
-        Err(_e)         => return 1,
-        Ok(_process)    => return 0,
-    };
+fn update() -> i32 {
+    let cmd = Command::new("sh").args(&["-c","apt update -y"]).status().expect(ERRMSG);
+    return cmd.code().unwrap();
 }
 
-fn upgrade() -> i8 {
-    match Command::new("sh").args(&["-c","apt install metasploit-framework -y"]).status() {
-        Err(_e)         => return 1,
-        Ok(_process)    => return 0,
-    };
+fn upgrade() -> i32 {
+    let cmd = Command::new("sh").args(&["-c","apt install metasploit-framework -y"]).status().expect(ERRMSG);
+    return cmd.code().unwrap();
 }
 
-fn reinitdb() -> i8 {
-    match Command::new("sh").args(&["-c","msfdb reinit"]).status() {
-        Err(_e)         => return 1,
-        Ok(_process)    => return 0,
-    };
+fn reinitdb() -> i32 {
+    let cmd = Command::new("sh").args(&["-c","msfdb reinit"]).status().expect(ERRMSG);
+    return cmd.code().unwrap();
 }
 
-fn autoremove() -> i8 {
-    match Command::new("sh").args(&["-c","apt autoremove -y"]).status() {
-        Err(_e)         => return 1,
-        Ok(_process)    => return 0,
-    };
+fn autoremove() -> i32 {
+    let cmd = Command::new("sh").args(&["-c","apt autoremove -y"]).status().expect(ERRMSG);
+    return cmd.code().unwrap();
 }
 
 
-fn autoclean() -> i8 {
-    match Command::new("sh").args(&["-c","apt autoclean -y"]).status() {
-        Err(_e)         => return 1,
-        Ok(_process)    => return 0,
-    };
+fn autoclean() -> i32 {
+    let cmd = Command::new("sh").args(&["-c","apt autoclean -y"]).status().expect(ERRMSG);
+    return cmd.code().unwrap();
 }
-pub fn checkinstallation(input: bool) -> Vec<i8> {
+
+pub fn checkinstallation(input: bool) -> Vec<i32> {
     if input == true {
         return vec![update(), upgrade(), reinitdb() ,autoremove(),autoclean()];
     } else {
