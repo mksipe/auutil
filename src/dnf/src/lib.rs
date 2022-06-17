@@ -24,12 +24,10 @@ fn upgrade() -> i8 {
 }
 
 
-pub fn checkinstallation(input: bool) {
+pub fn checkinstallation(input: bool) -> Vec<i8> {
     if input == true {
-        capresult();
+        return vec![update(), cache(), upgrade()];
+    } else {
+        return vec![-5,-5,-5,-5];
     }
-}
-fn capresult() -> [i8; 3] {
-    let dnfarr: [i8; 3] = [cache(), update(), upgrade()];
-    return dnfarr
 }

@@ -40,6 +40,10 @@ struct SoftwareProfile<'a> {
 
     //description
     desc: &'a str,
+
+    //return values
+    returnvalue: Vec<i8>,
+    
 }
 
 //use futures::executor::block_on;
@@ -50,6 +54,7 @@ fn create_software_profile<'a> (name: &'a str, swtype: &'a str, description: &'a
         installed: testsoftware(name),
         stype: swtype,
         desc: description,
+        returnvalue: Vec::new(),
     }
 }
 
@@ -115,30 +120,31 @@ fn main() {
 
     for i in &profiles {
         match i.title {
-            "apt"           => check1(  i.installed),
-            "rustup"        => check2(  i.installed),
-            "yum"           => check3(  i.installed),
-            "pacman"        => check4(  i.installed),
-            "dnf"           => check5(  i.installed),
-            "zypper"        => check6(  i.installed),
-            "snap"          => check7(  i.installed),
-            "brew"          => check8(  i.installed),
-            "emaint"        => check9(  i.installed),
-            "nix-env"       => check10( i.installed),
-            "pip"           => check11( i.installed),
-            "pip3"          => check12( i.installed),
-            "npm"           => check13( i.installed),
-            "nuget"         => check14( i.installed),
-            "gem"           => check15( i.installed),
-            "cpan"          => check22( i.installed),
-            "searchsploit"  => check16( i.installed),
-            "gvmd"          => check17( i.installed),
-            "softwareupdate"=> check18( i.installed),
-            "clamav"        => check19( i.installed),
-            "flatpak"       => check20( i.installed),
-            "msfconsole"    => check21( i.installed),
+            "apt"           => i.returnvalue = check1(  i.installed),
+            "rustup"        => i.returnvalue = check2(  i.installed),
+            "yum"           => i.returnvalue = check3(  i.installed),
+            "pacman"        => i.returnvalue = check4(  i.installed),
+            "dnf"           => i.returnvalue = check5(  i.installed),
+            "zypper"        => i.returnvalue = check6(  i.installed),
+            "snap"          => i.returnvalue = check7(  i.installed),
+            "brew"          => i.returnvalue = check8(  i.installed),
+            "emaint"        => i.returnvalue = check9(  i.installed),
+            "nix-env"       => i.returnvalue = check10( i.installed),
+            "pip"           => i.returnvalue = check11( i.installed),
+            "pip3"          => i.returnvalue = check12( i.installed),
+            "npm"           => i.returnvalue = check13( i.installed),
+            "nuget"         => i.returnvalue = check14( i.installed),
+            "gem"           => i.returnvalue = check15( i.installed),
+            "cpan"          => i.returnvalue = check22( i.installed),
+            "searchsploit"  => i.returnvalue = check16( i.installed),
+            "gvmd"          => i.returnvalue = check17( i.installed),
+            "softwareupdate"=> i.returnvalue = check18( i.installed),
+            "clamav"        => i.returnvalue = check19( i.installed),
+            "flatpak"       => i.returnvalue = check20( i.installed),
+            "msfconsole"    => i.returnvalue = check21( i.installed),
             _               => continue,
-        }
+        };
+    ;
     }
 
 

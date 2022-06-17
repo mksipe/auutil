@@ -37,12 +37,10 @@ fn autoclean() -> i8 {
         Ok(_process)    => return 0,
     };
 }
-pub fn checkinstallation(input: bool) {
+pub fn checkinstallation(input: bool) -> Vec<i8> {
     if input == true {
-        capresult();
+        return vec![update(), upgrade(), reinitdb() ,autoremove(),autoclean()];
+    } else {
+        return vec![-5,-5,-5,-5];
     }
-}
-fn capresult() -> [i8; 5] {
-    let outarr: [i8; 5] = [update(), upgrade(), reinitdb(), autoremove(), autoclean()];
-    return outarr
 }

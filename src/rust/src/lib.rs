@@ -8,8 +8,10 @@ fn update() -> i8 {
     };
 }
 
-pub fn checkinstallation(input: bool)  {
+pub fn checkinstallation(input: bool) -> Vec<i8> {
     if input == true {
-        update();
+        return vec![update()];
+    } else {
+        return vec![-5,-5,-5,-5];
     }
 }

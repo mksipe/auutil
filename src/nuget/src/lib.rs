@@ -18,14 +18,10 @@ fn upgrade() -> i8 {
 
 
 
-pub fn checkinstallation(input: bool) {
+pub fn checkinstallation(input: bool) -> Vec<i8> {
     if input == true {
-        capresult();
+        return vec![update(), upgrade()];
+    } else {
+        return vec![-5,-5,-5,-5];
     }
-}
-
-
-fn capresult() -> [i8; 2] {
-    let nugarr: [i8; 2] = [update(), upgrade()];
-    return nugarr
 }

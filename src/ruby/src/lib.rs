@@ -13,16 +13,10 @@ fn update() -> i8 {
 
 }
 
-pub fn checkinstallation(input: bool) {
+pub fn checkinstallation(input: bool) -> Vec<i8> {
     if input == true {
-        capresult();
-    } 
+        return vec![update()];
+    } else {
+        return vec![-5,-5,-5,-5];
+    }
 }
-
-
-fn capresult() -> [i8; 1] {
-    let gemarr: [i8; 1] = [update()];
-    return gemarr
-}
-
-
