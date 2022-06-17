@@ -27,6 +27,9 @@ use perl::checkinstallation         as check22;
 // This string is captured at compile time and contains the git hash of the current software version.
 const LOCALGITHASH: &str = include_str!("../.git/refs/heads/main");
 
+// This is the number of official profiles added by the developer
+const PROFCOUNT: usize = 24;
+
 struct SoftwareProfile<'a> {
     
     // software title
@@ -54,7 +57,7 @@ fn create_software_profile<'a> (name: &'a str, swtype: &'a str, description: &'a
         installed: testsoftware(name),
         stype: swtype,
         desc: description,
-        returnvalue: Vec::new(),
+        returnvalue: vec![0],
     }
 }
 
@@ -100,58 +103,63 @@ fn main() {
 
 
     //create an array of each profile 
-    let profiles: [SoftwareProfile; 24] = [
+    let profiles: [SoftwareProfile; PROFCOUNT] = [
         app1,  app2,  app3,  app4,  app5,  app6,  app7,  app8,  app9, 
         app10, app11, app12, app13, app14, app15, app16, app17, app18, app19, 
         app20, app21, app22, app23, app24
     ];
 
+
+    //CLI Display
+    //Initial banner of detected software
     println!("{}{:-^150}{}", "|", "Detected Software Summary".red(),"+");
     println!("AUUTIL Version: {}", LOCALGITHASH.yellow().bold());
-    for i in &profiles {
- 
-        display(i.installed, i.title);
-        println!("{:>5}\t{:>5}", i.stype, i.desc,);
+    for app in &profiles {
 
+        display(app.installed, app.title);
+        println!("{:<10}\t{:>20}", app.stype, app.desc,);
+    
     }
 
+    //Execution of updates
     println!("\n{}{:-^150}{}", "|", "Processes".red(),"+");
 
-
-    for i in &profiles {
-        match i.title {
-            "apt"           => i.returnvalue = check1(  i.installed),
-            "rustup"        => i.returnvalue = check2(  i.installed),
-            "yum"           => i.returnvalue = check3(  i.installed),
-            "pacman"        => i.returnvalue = check4(  i.installed),
-            "dnf"           => i.returnvalue = check5(  i.installed),
-            "zypper"        => i.returnvalue = check6(  i.installed),
-            "snap"          => i.returnvalue = check7(  i.installed),
-            "brew"          => i.returnvalue = check8(  i.installed),
-            "emaint"        => i.returnvalue = check9(  i.installed),
-            "nix-env"       => i.returnvalue = check10( i.installed),
-            "pip"           => i.returnvalue = check11( i.installed),
-            "pip3"          => i.returnvalue = check12( i.installed),
-            "npm"           => i.returnvalue = check13( i.installed),
-            "nuget"         => i.returnvalue = check14( i.installed),
-            "gem"           => i.returnvalue = check15( i.installed),
-            "cpan"          => i.returnvalue = check22( i.installed),
-            "searchsploit"  => i.returnvalue = check16( i.installed),
-            "gvmd"          => i.returnvalue = check17( i.installed),
-            "softwareupdate"=> i.returnvalue = check18( i.installed),
-            "clamav"        => i.returnvalue = check19( i.installed),
-            "flatpak"       => i.returnvalue = check20( i.installed),
-            "msfconsole"    => i.returnvalue = check21( i.installed),
+    for app in profiles.iter() {
+        match app.title {
+            "apt"           => check1(  app.installed),
+            "rustup"        => check2(  app.installed),
+            "yum"           => check3(  app.installed),
+            "pacman"        => check4(  app.installed),
+            "dnf"           => check5(  app.installed),
+            "zypper"        => check6(  app.installed),
+            "snap"          => check7(  app.installed),
+            "brew"          => check8(  app.installed),
+            "emaint"        => check9(  app.installed),
+            "nix-env"       => check10( app.installed),
+            "pip"           => check11( app.installed),
+            "pip3"          => check12( app.installed),
+            "npm"           => check13( app.installed),
+            "nuget"         => check14( app.installed),
+            "gem"           => check15( app.installed),
+            "cpan"          => check22( app.installed),
+            "searchsploit"  => check16( app.installed),
+            "gvmd"          => check17( app.installed),
+            "softwareupdate"=> check18( app.installed),
+            "clamav"        => check19( app.installed),
+            "flatpak"       => check20( app.installed),
+            "msfconsole"    => check21( app.installed),
             _               => continue,
         };
-    ;
+        
+
     }
+    //Final Banner
+    println!("{}{:-^150}{}", "|", "Software Update Report".red(),"+");
+    for app in profiles.iter(){
+        println!("{:<15}\treturned:\t{:?}", app.title ,app.returnvalue);
+    }
+    println!("{}{:-^150}{}", "|", "Updates Complete".red(),"+");
 
-
-    println!("{}{:-^150}{}", "|", "Software Update Complete".red(),"+");
-
-
-    
 }
 
 
