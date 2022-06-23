@@ -7,10 +7,10 @@ const ERRMSG:&str = "Something went wrong";
 fn update() -> i32 {
 
     if cfg!(windows) {
-        let cmd = Command::new("cmd").args(&["/c","python3 -m pip3 install --upgrade pip3"]).status().expect(ERRMSG);
+        let cmd = Command::new("cmd").args(&["/c","python3 -m pip3 install --upgrade pip"]).status().expect(ERRMSG);
         return cmd.code().unwrap();
     } else {
-        let cmd = Command::new("sh").args(&["-c","pip3 install --upgrade pip3"]).status().expect(ERRMSG);
+        let cmd = Command::new("sh").args(&["-c","pip3 install --upgrade pip"]).status().expect(ERRMSG);
         return cmd.code().unwrap();
     }
 }

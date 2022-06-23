@@ -1,4 +1,7 @@
+// Packages imported from crates.io
 use colored::*;
+
+// Custom libraries
 use std::include_str;
 use apt::checkinstallation          as check1;
 use rust::checkinstallation         as check2;
@@ -30,6 +33,7 @@ const LOCALGITHASH: &str = include_str!("../.git/refs/heads/main");
 // This is the number of official profiles added by the developer
 const PROFCOUNT: usize = 24;
 
+
 struct SoftwareProfile<'a> {
     
     // software title
@@ -45,12 +49,11 @@ struct SoftwareProfile<'a> {
     desc: &'a str,
 
     //return values
-    returnvalue: Vec<i32>,
+    returnvalue: Vec<i32>, // by default the return value will be -5
     
 }
 
-//use futures::executor::block_on;
-
+//Function to make profiles based upon a service or application. This is to simplify data.
 fn create_software_profile<'a> (name: &'a str, swtype: &'a str, description: &'a str) -> SoftwareProfile<'a> {
     SoftwareProfile {
         title: name,
@@ -105,8 +108,8 @@ fn main() {
     //create an array of each profile 
     let mut profiles: [SoftwareProfile; PROFCOUNT] = [
         app1,  app2,  app3,  app4,  app5,  app6,  app7,  app8,  app9, 
-        app10, app11, app12, app13, app14, app15, app16, app17, app18, app19, 
-        app20, app21, app22, app23, app24
+        app10, app11, app12, app13, app14, app15, app16, app17, app18, 
+        app24, app19, app20, app21, app22, app23
     ];
 
 
