@@ -191,4 +191,3 @@ fn display(input: bool, name: &str){
         print!("[ ]: {:<15}", name);
     };
 }
-

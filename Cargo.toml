@@ -12,67 +12,67 @@ colored = "2.0.0"
 futures = { version = "0.3.*" }
 
 [dependencies.apt]
-path = "src/apt/"
+path = "src/profiles/apt/"
 
 [dependencies.rust]
-path = "src/rust/"
+path = "src/profiles/rust/"
 
 [dependencies.yum]
-path = "src/yum"
+path = "src/profiles/yum"
 
 [dependencies.pacman]
-path = "src/pacman"
+path = "src/profiles/pacman"
 
 [dependencies.dnf]
-path = "src/dnf"
+path = "src/profiles/dnf"
 
 [dependencies.zypper]
-path = "src/zypper"
+path = "src/profiles/zypper"
 
 [dependencies.snap]
-path = "src/snap"
+path = "src/profiles/snap"
 
 [dependencies.brew]
-path = "src/brew"
+path = "src/profiles/brew"
 
 [dependencies.emerge]
-path = "src/emerge"
+path = "src/profiles/emerge"
 
 [dependencies.nix]
-path = "src/nix"
+path = "src/profiles/nix"
 
 [dependencies.pip]
-path = "src/pip"
+path = "src/profiles/pip"
 
 [dependencies.pip3]
-path = "src/pip3"
+path = "src/profiles/pip3"
 
 [dependencies.npm]
-path = "src/npm"
+path = "src/profiles/npm"
 
 [dependencies.nuget]
-path = "src/nuget"
+path = "src/profiles/nuget"
 
 [dependencies.ruby]
-path = "src/ruby"
+path = "src/profiles/ruby"
 
 [dependencies.exdb]
-path = "src/exdb"
+path = "src/profiles/exdb"
 
 [dependencies.gvm]
-path = "src/gvm"
+path = "src/profiles/gvm"
 
 [dependencies.osx]
-path = "src/osx"
+path = "src/profiles/osx"
 
 [dependencies.clamav]
-path = "src/clamav"
+path = "src/profiles/clamav"
 
 [dependencies.flatpak]
-path = "src/flatpak"
+path = "src/profiles/flatpak"
 
 [dependencies.metasploit]
-path = "src/metasploit"
+path = "src/profiles/metasploit"
 
 [dependencies.perl]
-path = "src/perl"
+path = "src/profiles/perl"
