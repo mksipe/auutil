@@ -115,7 +115,7 @@ fn main() {
 
     //CLI Display
     //Initial banner of detected software
-    println!("{}{:-^150}{}", "|", "Detected Software Summary".red(),"+");
+    println!("|{:-^150}+", "Detected Software Summary".red());
     println!("AUUTIL Version: {}", LOCALGITHASH.yellow().bold());
     for app in &profiles {
 
@@ -125,7 +125,7 @@ fn main() {
     }
 
     //Execution of updates
-    println!("\n{}{:-^150}{}", "|", "Processes".red(),"+");
+    println!("\n|{:-^150}+", "Processes".red());
 
     for app in profiles.iter_mut() {
         match app.title {
@@ -157,16 +157,16 @@ fn main() {
 
     }
     //Final Banner
-    println!("{}{:-^150}{}", "|", "Software Update Report".red(),"+");
+    println!("|{:-^150}+", "Software Update Report".red());
     for app in profiles.iter(){
-        if app.installed == true {
+        if app.installed {
             println!("{:<15}\treturned:\t{:?}", app.title ,app.returnvalue);
         } else {
-            println!("{:<15}\treturned:\t{}", app.title ,"Not Installed");
+            println!("{:<15}\treturned:\tNot Installed", app.title );
 
         }
     }
-    println!("{}{:-^150}{}", "|", "Updates Complete".red(),"+");
+    println!("|{:-^150}+", "Updates Complete".red());
 
 }
 
@@ -175,17 +175,12 @@ fn main() {
 fn testsoftware(input: &str) -> bool  {
 
     let result = which::which(&input);
-    let out = match &result {
-        Ok(_)   => true,
-        Err(_)  => false,
-    };
-
-    return out
+    result.is_ok()
 
 }
 
 fn display(input: bool, name: &str){
-    if input == true {
+    if input {
         print!("[{}]: {:<15}", "X".white().bold(),name.yellow());
     } else {
         print!("[ ]: {:<15}", name);
