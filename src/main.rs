@@ -1,5 +1,6 @@
 // Packages imported from crates.io
 use colored::*;
+use clap::{Arg, App};
 
 // Custom libraries
 use std::include_str;
@@ -64,9 +65,22 @@ fn create_software_profile<'a> (name: &'a str, swtype: &'a str, description: &'a
     }
 }
 
-
-
 fn main() {
+    // Define basic app information
+    let auutil = App::new("auutil").about("Automatic Update Utility (AUUTIL) is designed to update software applications quickly and automatically.").author("Mason Sipe").version("0.4.0");
+    
+    // Define command line arguments
+    let update_all = Arg::with_name("full").long("full-update").takes_value(false).help("Gracefully updates all supported software.").required(false);
+    
+    // Add parseable arguments
+    let auutil = auutil.arg(update_all);
+
+    // Extract Matches
+    let matches = auutil.get_matches();
+
+}
+
+fn full_update() {
 
     //package managers
 
