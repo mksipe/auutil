@@ -1,6 +1,7 @@
 // Packages imported from crates.io
 use colored::*;
 use clap::{Arg, App};
+use std::time::SystemTime;
 
 // Custom libraries
 use std::include_str;
@@ -70,13 +71,21 @@ fn main() {
     let auutil = App::new("auutil").about("Automatic Update Utility (AUUTIL) is designed to update software applications quickly and automatically.").author("Mason Sipe").version("0.4.0");
     
     // Define command line arguments
-    let update_all = Arg::with_name("full").long("full-update").takes_value(false).help("Gracefully updates all supported software.").required(false);
+    let update_all = Arg::with_name("full").long("full-update").short('f').takes_value(false).help("Gracefully updates all supported software.").required(false);
     
     // Add parseable arguments
     let auutil = auutil.arg(update_all);
 
     // Extract Matches
     let matches = auutil.get_matches();
+
+    // If arguments are present ... 
+    if matches.is_present("full") {
+        let start:SystemTime = SystemTime::now();
+        full_update();
+        let end:SystemTime   = SystemTime::now();
+        println!("Completed FULL UPDATE in {:?}", end.duration_since(start).expect("Clock somehow went backwards..."));
+    }
 
 }
 
