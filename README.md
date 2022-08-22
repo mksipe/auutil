@@ -7,13 +7,13 @@ Automatic Update Utility (AUUTIL) is designed to update software applications qu
 Using cargo is one of the easiest ways to make an installation.
 
 ```bash
-cargo install .
+cargo install --path .
 
 ```
 
 ## Usage
 
-`auutil`
+`auutil -h`
 
 
 ## Contributing
