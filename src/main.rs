@@ -96,10 +96,13 @@ async fn main() {
         println!("Completed FULL UPDATE in {:?}", end.duration_since(start).expect("Clock somehow went backwards..."));
     } else if matches.is_present("self") {
 
-        if LOCALGITHASH.eq(get_main_hash().await.as_str()) {
+        let localgithash    = LOCALGITHASH;
+        let localhash       = localgithash.replace("\n","");
+
+        if localhash.eq(get_main_hash().await.as_str()) {
             println!("This version of AUUTIL is up-to-date.");
         } else {
-            println!("Your version of AUUTIL is out-of-date.\nCurrent {} -> HEAD {}",&LOCALGITHASH,get_main_hash().await.as_str());
+            println!("Your version of AUUTIL is out-of-date.\nCurrent {} -> HEAD {}",&localhash,get_main_hash().await.as_str());
         }
 
     }
