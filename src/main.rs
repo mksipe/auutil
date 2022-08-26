@@ -2,6 +2,7 @@
 use colored::*;
 use clap::{Arg, App};
 use std::time::SystemTime;
+use reqwest::ClientBuilder;
 
 // Custom libraries
 use std::include_str;
@@ -31,6 +32,9 @@ use perl::checkinstallation         as check22;
 
 // This string is captured at compile time and contains the git hash of the current software version.
 const LOCALGITHASH: &str = include_str!("../.git/refs/heads/main");
+
+// The static url of the repository API
+const GH_API: &str = "https://api.github.com/repos/mksipe/auutil/commits/main";
 
 // This is the number of official profiles added by the developer
 const PROFCOUNT: usize = 24;
@@ -66,26 +70,41 @@ fn create_software_profile<'a> (name: &'a str, swtype: &'a str, description: &'a
     }
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
     // Define basic app information
     let auutil = App::new("auutil").about("Automatic Update Utility (AUUTIL) is designed to update software applications quickly and automatically.").author("Mason Sipe").version("0.4.0");
     
     // Define command line arguments
-    let update_all = Arg::with_name("full").long("full-update").short('f').takes_value(false).help("Gracefully updates all supported software.").required(false);
-    
+    let update_all  = Arg::with_name("full").long("full-update").short('f').takes_value(false).help("Gracefully updates all supported software.").required(false);
+    let update_self = Arg::with_name("self").long("self-update").short('s').takes_value(false).help("Updates AUUTIL to the latest version.").required(false);     
+
+
     // Add parseable arguments
     let auutil = auutil.arg(update_all);
-
+    let auutil = auutil.arg(update_self);
     // Extract Matches
     let matches = auutil.get_matches();
 
     // If arguments are present ... 
+
+    
     if matches.is_present("full") {
         let start:SystemTime = SystemTime::now();
         full_update();
         let end:SystemTime   = SystemTime::now();
         println!("Completed FULL UPDATE in {:?}", end.duration_since(start).expect("Clock somehow went backwards..."));
+    } else if matches.is_present("self") {
+
+        if LOCALGITHASH.eq(get_main_hash().await.as_str()) {
+            println!("This version of AUUTIL is up-to-date.");
+        } else {
+            println!("Your version of AUUTIL is out-of-date.\nCurrent {} -> HEAD {}",&LOCALGITHASH,get_main_hash().await.as_str());
+        }
+
     }
+
+
 
 }
 
@@ -208,4 +227,30 @@ fn display(input: bool, name: &str){
     } else {
         print!("[ ]: {:<15}", name);
     };
+}
+
+
+async fn get_main_hash() -> String {
+
+    // Request data from Github.com
+
+    let useragent   = format!("{}{}", "Auutil/",LOCALGITHASH).replace("\n","");
+    let client      = reqwest::Client::builder().user_agent(useragent).gzip(true).build();
+    let out         = client.expect("Network Error").get(GH_API).send().await.expect("Failed to get a response from Github.com").text().await.expect("Failed to resolve Payload from Github.com");
+    
+    // Filter data via regex from json response
+
+    use regex::Regex;
+    let re          = Regex::new("sha.............................................|^$").unwrap();
+    let ret         = re.captures(&out).unwrap();
+    let regfilt     = ret.get(0).map_or("", |m| m.as_str());
+
+    // Filter regex data to get only the commit hash.
+    
+    let mut filt = regfilt.replace(&['\\','"',':',','],"");
+    filt.remove(0);
+    filt.remove(0);
+    filt.remove(0);
+
+    return filt
 }
