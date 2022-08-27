@@ -2,7 +2,6 @@
 use colored::*;
 use clap::{Arg, App};
 use std::time::SystemTime;
-use reqwest::ClientBuilder;
 
 // Custom libraries
 use std::include_str;
